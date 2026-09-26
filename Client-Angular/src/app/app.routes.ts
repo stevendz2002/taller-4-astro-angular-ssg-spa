@@ -20,6 +20,7 @@ import { TicketsPage } from './pages/tickets/tickets.page';
  * @see {@link UsersPage}
  * @see {@link ProductsPage}
  * @see {@link OrdersPage}
+ * @see {@link TicketsPage}
  */
 export const routes: Routes = [
 
