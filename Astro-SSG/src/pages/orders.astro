@@ -1,0 +1,73 @@
+---
+import Badge from "@components/shared/Badge.astro";
+import { ORDERS } from "@data/Orders";
+import type { BadgeType } from "@interfaces/Badge";
+import type { Order, OrderStatus } from "@interfaces/Orders";
+import MainLayout from "@layouts/MainLayout.astro";
+
+const orders: Order[] = ORDERS;
+
+const statusMap: Record<OrderStatus, BadgeType> = {
+  'PENDING': 'warning',
+  'PROCESSING': 'primary',
+  'COMPLETED': 'success',
+  'CANCELLED': 'danger',
+};
+
+const formatCurrency = (amount: number) => {
+  return `$${amount.toLocaleString('es-CO')}`;
+};
+
+const formatDate = (dateStr: string) => {
+  const date = new Date(dateStr);
+  return date.toLocaleDateString('es-CO', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit',
+  });
+};
+---
+
+<MainLayout>
+  <table class="table table-striped border align-middle">
+    <thead>
+      <tr>
+        <th scope="col">Id</th>
+        <th scope="col">Usuario</th>
+        <th scope="col">ID Usuario</th>
+        <th scope="col">Artículos</th>
+        <th scope="col">Total</th>
+        <th scope="col">Estado</th>
+        <th scope="col">Fecha</th>
+      </tr>
+    </thead>
+    <tbody>
+      {orders.map((order) => (
+        <tr>
+          <th scope="row">{order.id}</th>
+          <td>{order.userName}</td>
+          <td><small class="text-body-secondary font-monospace">{order.userId}</small></td>
+          <td>
+            <ul class="list-unstyled mb-0 small">
+              {order.items.map((item) => (
+                <li>
+                  {item.quantity}x {item.productName} ({formatCurrency(item.unitPrice)})
+                </li>
+              ))}
+            </ul>
+          </td>
+          <td>{formatCurrency(order.totalAmount)}</td>
+          <td>
+            <Badge
+              text={order.status}
+              type={statusMap[order.status]}
+            />
+          </td>
+          <td>{formatDate(order.createdAt)}</td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</MainLayout>
