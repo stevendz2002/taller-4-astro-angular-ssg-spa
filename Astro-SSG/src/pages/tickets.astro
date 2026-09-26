@@ -1,0 +1,60 @@
+---
+import Badge from "@components/shared/Badge.astro";
+import { TICKETS } from "@data/Tickets";
+import type { BadgeType } from "@interfaces/Badge";
+import type { Ticket, TicketPriority, TicketStatus } from "@interfaces/Ticket";
+import MainLayout from "@layouts/MainLayout.astro";
+
+const tickets: Ticket[] = TICKETS;
+
+const priorityMap: Record<TicketPriority, BadgeType> = {
+    'Baja':    'secondary',
+    'Media':   'warning',
+    'Alta':    'danger',
+    'Crítica': 'dark',
+};
+
+const statusMap: Record<TicketStatus, BadgeType> = {
+    'Abierto':     'primary',
+    'En Progreso': 'warning',
+    'En Revisión': 'info',
+    'Resuelto':    'success',
+    'Cerrado':     'secondary',
+};
+---
+<MainLayout>
+  <table class="table table-striped border">
+	<thead>
+		<tr>
+			<th scope="col">Id</th>
+			<th scope="col">Asunto</th>
+			<th scope="col">Asignado a</th>
+			<th scope="col">Prioridad</th>
+			<th scope="col">Estado</th>
+			<th scope="col">Fecha</th>
+		</tr>
+	</thead>
+	<tbody>
+		{tickets.map((ticket) => (
+			<tr>
+				<th scope="row">{ticket.id}</th>
+				<td>{ticket.subject}</td>
+				<td>{ticket.assigned_to}</td>
+				<td>
+					<Badge
+						text={ticket.priority}
+						type={priorityMap[ticket.priority]}
+					/>
+				</td>
+				<td>
+					<Badge
+						text={ticket.status}
+						type={statusMap[ticket.status]}
+					/>
+				</td>
+				<td>{ticket.date}</td>
+			</tr>
+		))}
+	</tbody>
+  </table>
+</MainLayout>
