@@ -3,6 +3,7 @@ import { DatePage } from './pages/date/date.page';
 import { OrdersPage } from './pages/orders/orders.page';
 import { ProductsPage } from './pages/products/products.page';
 import { UsersPage } from './pages/users/users.page';
+import { TicketsPage } from './pages/tickets/tickets.page';
 
 /**
  * Definición de las rutas principales de la aplicación.
@@ -57,6 +58,15 @@ export const routes: Routes = [
    * de mostrar la fecha actual del sistema.
    */
   { path: 'date', component: DatePage },
+
+  /**
+   * Ruta de tickets.
+   *
+   * @remarks
+   * Renderiza el componente `TicketsPage`, encargado
+   * de mostrar y gestionar el listado de incidencias/tickets.
+   */
+  { path: 'tickets', component: TicketsPage },
 
   /**
    * Ruta comodín.
