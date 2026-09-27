@@ -5,6 +5,7 @@ import { ProductsPage } from './pages/products/products.page';
 import { UsersPage } from './pages/users/users.page';
 import { TicketsPage } from './pages/tickets/tickets.page';
 
+import { ProvidersPage } from './pages/providers/providers.page';
 /**
  * Definición de las rutas principales de la aplicación.
  *
@@ -21,6 +22,7 @@ import { TicketsPage } from './pages/tickets/tickets.page';
  * @see {@link ProductsPage}
  * @see {@link OrdersPage}
  * @see {@link TicketsPage}
+ * @see {@link ProvidersPage}
  */
 export const routes: Routes = [
 
@@ -50,6 +52,16 @@ export const routes: Routes = [
    * de mostrar y gestionar el listado de órdenes.
    */
   { path: 'orders', component: OrdersPage },
+
+
+  /**
+   * Ruta de proveedores.
+   *
+   * @remarks
+   * Renderiza el componente `ProvidersPage`, encargado
+   * de mostrar y gestionar el listado de proveedores.
+   */
+  { path: 'providers', component: ProvidersPage },
 
   /**
    * Ruta de la fecha.
