@@ -27,7 +27,7 @@ export const PROVIDERS: Provider[] = [
         contact: 'Carlos Rodríguez',
         email: 'donesteban@gmail.com',
         phone: '3001234567',
-        category: 'Alimentos',
+        category: 'Tecnología',
         price: 8200
     },
     {
@@ -36,7 +36,7 @@ export const PROVIDERS: Provider[] = [
         contact: 'Carlos Rodríguez',
         email: 'distribuidoralapolar@gmail.com',
         phone: '3001234567',
-        category: 'Alimentos',
+        category: 'Servicios',
         price: 14500
     },
     {
@@ -45,7 +45,7 @@ export const PROVIDERS: Provider[] = [
         contact: 'Juan Pérez',
         email: 'pepitoperez@gmail.com',
         phone: '3001234567',
-        category: 'Alimentos',
+        category: 'Logística',
         price: 4500
     },
     {
@@ -54,7 +54,7 @@ export const PROVIDERS: Provider[] = [
         contact: 'Carlos Rodríguez',
         email: 'donesteban@gmail.com',
         phone: '3001234567',
-        category: 'Alimentos',
+        category: 'Tecnología',
         price: 8200
     },
     {
@@ -63,7 +63,7 @@ export const PROVIDERS: Provider[] = [
         contact: 'Carlos Rodríguez',
         email: 'distribuidoralapolar@gmail.com',
         phone: '3001234567',
-        category: 'Alimentos',
+        category: 'Servicios',
         price: 14500
     },
     {
@@ -72,7 +72,7 @@ export const PROVIDERS: Provider[] = [
         contact: 'Juan Pérez',
         email: 'pepitoperez@gmail.com',
         phone: '3001234567',
-        category: 'Alimentos',
+        category: 'Servicios',
         price: 4500
     },
     {
@@ -81,7 +81,7 @@ export const PROVIDERS: Provider[] = [
         contact: 'Carlos Rodríguez',
         email: 'donesteban@gmail.com',
         phone: '3001234567',
-        category: 'Alimentos',
+        category: 'Logística',
         price: 8200
     },
     {
@@ -90,7 +90,7 @@ export const PROVIDERS: Provider[] = [
         contact: 'Carlos Rodríguez',
         email: 'distribuidoralapolar@gmail.com',
         phone: '3001234567',
-        category: 'Alimentos',
+        category: 'Servicios',
         price: 14500
     },
     {
@@ -99,7 +99,7 @@ export const PROVIDERS: Provider[] = [
         contact: 'Juan Pérez',
         email: 'pepitoperez@gmail.com',
         phone: '3001234567',
-        category: 'Alimentos',
+        category: 'Tecnología',
         price: 4500
     },
     {
@@ -117,7 +117,7 @@ export const PROVIDERS: Provider[] = [
         contact: 'Carlos Rodríguez',
         email: 'distribuidoralapolar@gmail.com',
         phone: '3001234567',
-        category: 'Alimentos',
+        category: 'Tecnología',
         price: 14500
     },
     {
@@ -126,7 +126,7 @@ export const PROVIDERS: Provider[] = [
         contact: 'Juan Pérez',
         email: 'pepitoperez@gmail.com',
         phone: '3001234567',
-        category: 'Alimentos',
+        category: 'Logística',
         price: 4500
     },
     {
