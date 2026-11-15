@@ -7,13 +7,14 @@ interface Props {
 
 const { navLinks } = Astro.props as Props;
 const { pathname } = Astro.url;
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
 ---
 
 <ul class="nav nav-pills">
     {navLinks.map((navLink) => (
         <li class="nav-item">
-            <a  href={navLink.url}
-                class={`nav-link ${pathname === navLink.url ? "active" : ""}`}>
+            <a  href={base + navLink.url + "/"}
+                class={`nav-link ${pathname.replace(/\/$/, "") === base + navLink.url ? "active" : ""}`}>
                 {navLink.text}
             </a>
         </li>

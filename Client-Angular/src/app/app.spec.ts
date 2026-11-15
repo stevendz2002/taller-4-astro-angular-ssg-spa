@@ -37,6 +37,7 @@ describe('App', () => {
         { text: 'Productos', url: '/products' },
         { text: 'Proveedores', url: '/providers' },
         { text: 'Orders', url: '/orders' },
+        { text: 'Tickets', url: '/tickets' },
         { text: 'Fecha', url: '/date' },
       ]
     });

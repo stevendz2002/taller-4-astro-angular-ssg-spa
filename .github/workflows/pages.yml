@@ -1,0 +1,72 @@
+name: Publicar Astro y Angular en GitHub Pages
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages-${{ github.event_name == 'pull_request' && github.ref || 'publish' }}
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      SITE_BASE: /${{ github.event.repository.name }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+          cache-dependency-path: |
+            Astro-SSG/package-lock.json
+            Client-Angular/package-lock.json
+      - name: Compilar Astro
+        working-directory: Astro-SSG
+        run: |
+          npm ci
+          npm run build -- --base "$SITE_BASE/astro/"
+      - name: Probar y compilar Angular
+        working-directory: Client-Angular
+        run: |
+          npm ci
+          npm test -- --runInBand
+          npm run build -- --base-href "$SITE_BASE/angular/" --output-path dist/pages
+      - name: Preparar ambas demos
+        run: |
+          mkdir -p site/astro site/angular
+          cp -R Astro-SSG/dist/. site/astro/
+          cp -R Client-Angular/dist/pages/browser/. site/angular/
+          cp pages/index.html site/index.html
+          test -s site/astro/users/index.html
+          test -s site/angular/index.html
+      - uses: actions/upload-pages-artifact@v3
+        if: github.ref == 'refs/heads/master' && github.event_name != 'pull_request'
+        with:
+          path: site
+  deploy:
+    if: github.ref == 'refs/heads/master' && github.event_name != 'pull_request'
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/deploy-pages@v4
+        id: deployment
+      - name: Verificar las dos demos
+        env:
+          SITE_URL: ${{ steps.deployment.outputs.page_url }}
+        run: |
+          for route in '' 'astro/users/' 'angular/'; do
+            curl --fail --silent --show-error --retry 6 --retry-all-errors "${SITE_URL}$route" -o /dev/null
+          done

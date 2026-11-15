@@ -1,3 +1,6 @@
+import { HttpResponse } from '@angular/common/http';
+import { of } from 'rxjs';
+import { providersMock } from '../mocks/providers.mocks';
 import { HttpInterceptorFn } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 
@@ -23,5 +26,10 @@ import { environment } from '../../environments/environment';
  * ```
  */
 export const clientAngularInterceptor: HttpInterceptorFn = (req, next) => {
+  // The published demo runs without the local API; the other views already use local data.
+  const providers = /^api\/providers\/(\d+)$/.exec(req.url);
+  if (location.hostname.endsWith('.github.io') && req.method === 'GET' && providers) {
+    return of(new HttpResponse({ body: providersMock.slice(0, Number(providers[1])) }));
+  }
   return next(req.clone({ url: `${environment.baseUrl}/${req.url}`}));
 };

@@ -1,6 +1,6 @@
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { ApplicationConfig, provideBrowserGlobalErrorListeners, provideZoneChangeDetection } from '@angular/core';
-import { provideRouter } from '@angular/router';
+import { provideRouter, withHashLocation } from '@angular/router';
 import { routes } from './app.routes';
 import { clientAngularInterceptor } from './interceptors/client-angular.interceptor';
 
@@ -59,7 +59,7 @@ export const appConfig: ApplicationConfig = {
      *
      * @see {@link routes}
      */
-    provideRouter(routes),
+    provideRouter(routes, withHashLocation()),
 
     /**
      * Proveedor del cliente HTTP.
