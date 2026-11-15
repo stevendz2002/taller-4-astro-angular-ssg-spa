@@ -27,5 +27,6 @@ export const environment = {
    * `${environment.baseUrl}/users`
    * ```
    */
-  baseUrl: 'http://localhost:3000'
+  baseUrl: 'http://localhost:3000',
+  useDemoData: false
 };

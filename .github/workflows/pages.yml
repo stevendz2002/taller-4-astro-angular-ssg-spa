@@ -16,8 +16,9 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
-    env:
-      SITE_BASE: /${{ github.event.repository.name }}
+    permissions:
+      contents: read
+      pages: read
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -27,17 +28,33 @@ jobs:
           cache-dependency-path: |
             Astro-SSG/package-lock.json
             Client-Angular/package-lock.json
+      - name: Detectar la ruta pública de GitHub Pages
+        id: pages
+        if: github.ref == 'refs/heads/master' && github.event_name != 'pull_request'
+        uses: actions/configure-pages@v5
       - name: Compilar Astro
         working-directory: Astro-SSG
+        env:
+          PAGES_BASE: ${{ steps.pages.outputs.base_path }}
+          REPOSITORY_NAME: ${{ github.event.repository.name }}
+          PAGES_CONFIGURED: ${{ steps.pages.outcome }}
         run: |
+          base="$PAGES_BASE"
+          if [ "$PAGES_CONFIGURED" = skipped ]; then base="/$REPOSITORY_NAME"; fi
           npm ci
-          npm run build -- --base "$SITE_BASE/astro/"
+          npm run build -- --base "${base%/}/astro/"
       - name: Probar y compilar Angular
         working-directory: Client-Angular
+        env:
+          PAGES_BASE: ${{ steps.pages.outputs.base_path }}
+          REPOSITORY_NAME: ${{ github.event.repository.name }}
+          PAGES_CONFIGURED: ${{ steps.pages.outcome }}
         run: |
+          base="$PAGES_BASE"
+          if [ "$PAGES_CONFIGURED" = skipped ]; then base="/$REPOSITORY_NAME"; fi
           npm ci
           npm test -- --runInBand
-          npm run build -- --base-href "$SITE_BASE/angular/" --output-path dist/pages
+          npm run build -- --configuration production,pages --base-href "${base%/}/angular/" --output-path dist/pages
       - name: Preparar ambas demos
         run: |
           mkdir -p site/astro site/angular
@@ -46,7 +63,7 @@ jobs:
           cp pages/index.html site/index.html
           test -s site/astro/users/index.html
           test -s site/angular/index.html
-      - uses: actions/upload-pages-artifact@v3
+      - uses: actions/upload-pages-artifact@v4
         if: github.ref == 'refs/heads/master' && github.event_name != 'pull_request'
         with:
           path: site
